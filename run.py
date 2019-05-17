@@ -32,7 +32,7 @@ def startGame():
     done = False
 
 
-    bg = pygame.image.load("resources/img-ludo/bg_game.jpg")
+    bg = pygame.image.load("resources/background/TacTikBoard.png")
     gameDisplay = pygame.display.set_mode((window_width, window_height))
     gameDisplay.blit(bg, (0, 0))
 
