@@ -57,14 +57,14 @@ class Ludo:
 
     def CurrentPlayer(self):
         if (self.cf.CurrentPos == -1):
-            text = self.font.render("Incepeti jocul.", True, (0, 60, 0))
+            text = self.font.render("Start the game.", True, (0, 60, 0))
         else:
             player = self.cf.PList[self.cf.CurrentPos]
-            text = self.font.render("Este randul lui: " + str(player), True, (0, 60, 0))
+            text = self.font.render("It's his turn: " + str(player), True, (0, 60, 0))
 
         self.screen.blit(text, (78, 640))
 
-        info = self.font.render("Nu am mutari.", True, (255, 0, 0))
+        info = self.font.render("I have no moves.", True, (255, 0, 0))
         self.screen.blit(info, (78, 680))
 
     def CurrentZar(self):
@@ -87,14 +87,14 @@ class Ludo:
                     found = i
                     break
             if (found > -1):
-                self.print ("Ai apasat pe un pion: " + self.cf.ITEMS_Pos[i][0])
+                self.print ("You pushed a pawn: " + self.cf.ITEMS_Pos[i][0])
                 self.Click_Pion(found)
 
-            # Verifica pizitia zarului
+            # Check the dice
             if (x >= 295 and x < 405 and y >= 295 and y < 405):
                 self.Play()
 
-                self.print (" [Click] Ai dat cu zarul: ", self.zar)
+                self.print (" [Click] You dared with the dice: ", self.zar)
 
                 self.PlayerMove()
 
@@ -107,7 +107,7 @@ class Ludo:
         
         self.Play()
         
-        self.print (" [Space] Ai dat cu zarul: ", self.zar)
+        self.print (" [Space] You dared with the dice: ", self.zar)
         
         self.PlayerMove()
 
@@ -137,7 +137,7 @@ class Ludo:
             if (self.cf.CurrentPos >= self.cf.MaxPos):
                 self.cf.CurrentPos = 0
 
-            self.print("Este randul lui: " + str(self.cf.PList[self.cf.CurrentPos]))
+            self.print("It's his turn: " + str(self.cf.PList[self.cf.CurrentPos]))
 
             self.sound.PlayDice()
             self.zar = self.Number()
@@ -145,7 +145,7 @@ class Ludo:
 
             self.move = False
         else:
-            self.print("Asteptam dupa: " + str(self.cf.PList[self.cf.CurrentPos]))
+            self.print("Waiting for: " + str(self.cf.PList[self.cf.CurrentPos]))
 
     def PlayerMove(self):
         player = self.cf.PList[self.cf.CurrentPos]
@@ -159,7 +159,7 @@ class Ludo:
                     self.cf.ITEMS_Pos[2][1] == self.cf.GREEN_Pos[2][0] and self.cf.ITEMS_Pos[2][2] == self.cf.GREEN_Pos[2][1] and
                     self.cf.ITEMS_Pos[3][1] == self.cf.GREEN_Pos[3][0] and self.cf.ITEMS_Pos[3][2] == self.cf.GREEN_Pos[3][1]
                 ):
-                    self.print("GREEN: Nu sunt mutari disponibile.")
+                    self.print("GREEN: There are no moves available.")
                     self.move = True
                     return False
                 else:
@@ -171,7 +171,7 @@ class Ludo:
                     self.cf.ITEMS_Pos[6][1] == self.cf.RED_Pos[2][0] and self.cf.ITEMS_Pos[6][2] == self.cf.RED_Pos[2][1] and
                     self.cf.ITEMS_Pos[7][1] == self.cf.RED_Pos[3][0] and self.cf.ITEMS_Pos[7][2] == self.cf.RED_Pos[3][1]
                 ):
-                    self.print("RED: Nu sunt mutari disponibile.")
+                    self.print("RED: There are no moves available.")
                     self.move = True
                     return False
                 else:
@@ -183,7 +183,7 @@ class Ludo:
                     self.cf.ITEMS_Pos[10][1] == self.cf.BLUE_Pos[2][0] and self.cf.ITEMS_Pos[10][2] == self.cf.BLUE_Pos[2][1] and
                     self.cf.ITEMS_Pos[11][1] == self.cf.BLUE_Pos[3][0] and self.cf.ITEMS_Pos[11][2] == self.cf.BLUE_Pos[3][1]
                 ):
-                    self.print("BLUE: Nu sunt mutari disponibile.")
+                    self.print("BLUE: There are no moves available.")
                     self.move = True
                     return False
                 else:
@@ -195,7 +195,7 @@ class Ludo:
                     self.cf.ITEMS_Pos[14][1] == self.cf.YELLOW_Pos[2][0] and self.cf.ITEMS_Pos[14][2] == self.cf.YELLOW_Pos[2][1] and
                     self.cf.ITEMS_Pos[15][1] == self.cf.YELLOW_Pos[3][0] and self.cf.ITEMS_Pos[15][2] == self.cf.YELLOW_Pos[3][1]
                 ):
-                    self.print("YELLOW: Nu sunt mutari disponibile.")
+                    self.print("YELLOW: There are no moves available.")
                     self.move = True
                     return False
                 else:
@@ -203,14 +203,14 @@ class Ludo:
             else:
                 self.print("Unknown Player: {" +str(player)+ "}.")
         else:
-            self.print("Zarul " + str(self.zar))
+            self.print("Dice " + str(self.zar))
             #self.move = True
             return False
 
 
     def Click_Pion(self, pos):
         if (self.move == True):
-            self.print("Pionul selectat nu poate fi mutat.")
+            self.print("The selected pawn can not be moved.")
             return 0
 
         player = self.cf.PList[self.cf.CurrentPos]
@@ -222,15 +222,15 @@ class Ludo:
                         self.cf.ITEMS_Pos[pos][1] = self.cf.GREEN_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.GREEN_Start[1]
                         self.sound.PlayStart()
-                        self.print("GREEN: Pionul a iesit din casa.")
+                        self.print("GREEN: The pawn came out of the house.")
                         self.move = True
                         return 0
 
                 for i in range(0, len(self.cf.GREEN_Win)):
                     if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.GREEN_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.GREEN_Win[i][1]):
-                        self.print("GREEN: Ai ajuns intr-o zona finala.")
+                        self.print("GREEN: You've come to a final area.")
 
-                        print ("Zar curent: " + str(self.zar) + " Pos: " + str(i))
+                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
 
                         #GREEN_Play
                         # GREEN_End
@@ -250,15 +250,15 @@ class Ludo:
                         self.cf.ITEMS_Pos[pos][1] = self.cf.RED_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.RED_Start[1]
                         self.sound.PlayStart()
-                        self.print("RED: Pionul a iesit din casa.")
+                        self.print("RED: The pawn came out of the house.")
                         self.move = True
                         return 0
 
                 for i in range(0, len(self.cf.RED_Win)):
                     if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.RED_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.RED_Win[i][1]):
-                        self.print("RED: Ai ajuns intr-o zona finala.")
+                        self.print("RED: You've come to a final area.")
 
-                        print ("Zar curent: " + str(self.zar) + " Pos: " + str(i))
+                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
 
                         self.MoveFinalEnd(i, pos, "RED",  self.cf.RED_End, self.cf.RED_Play, self.cf.RED_Win)
 
@@ -275,15 +275,15 @@ class Ludo:
                         self.cf.ITEMS_Pos[pos][1] = self.cf.BLUE_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.BLUE_Start[1]
                         self.sound.PlayStart()
-                        self.print("BLUE: Pionul a iesit din casa.")
+                        self.print("BLUE: The pawn came out of the house.")
                         self.move = True
                         return 0
 
                 for i in range(0, len(self.cf.BLUE_Win)):
                     if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.BLUE_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.BLUE_Win[i][1]):
-                        self.print("BLUE: Ai ajuns intr-o zona finala.")
+                        self.print("BLUE: You've come to a final area.")
 
-                        print ("Zar curent: " + str(self.zar) + " Pos: " + str(i))
+                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
 
                         self.MoveFinalEnd(i, pos, "BLUE",  self.cf.BLUE_End, self.cf.BLUE_Play, self.cf.BLUE_Win)
 
@@ -300,15 +300,15 @@ class Ludo:
                         self.cf.ITEMS_Pos[pos][1] = self.cf.YELLOW_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.YELLOW_Start[1]
                         self.sound.PlayStart()
-                        self.print("YELLOW: Pionul a iesit din casa.")
+                        self.print("YELLOW: The pawn came out of the house.")
                         self.move = True
                         return 0
 
                 for i in range(0, len(self.cf.YELLOW_Win)):
                     if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.YELLOW_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.YELLOW_Win[i][1]):
-                        self.print("YELLOW: Ai ajuns intr-o zona finala.")
+                        self.print("YELLOW: You've come to a final area.")
 
-                        print ("Zar curent: " + str(self.zar) + " Pos: " + str(i))
+                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
 
                         self.MoveFinalEnd(i, pos, "YELLOW",  self.cf.YELLOW_End, self.cf.YELLOW_Play, self.cf.YELLOW_Win)
 
@@ -324,7 +324,7 @@ class Ludo:
 
     def MoveFinalEnd(self, i, pos, Color,  ColorEnd, ColorPlay, ColorWin):
         
-        print ("Si eu si eu", pos, Color, ColorEnd, ColorPlay, ColorWin)
+        print ("Me too me too", pos, Color, ColorEnd, ColorPlay, ColorWin)
         ifZar = 0
         iCheck = 5
         while (ifZar < 5):
@@ -361,12 +361,12 @@ class Ludo:
                 
                 if (WinGg == True):
                     self.sound.PlayWin()
-                    messagebox.showinfo("Ludo", "Jucatorul " +str(Color)+ " a castigat.")
+                    messagebox.showinfo("Ludo", "The player " +str(Color)+ " won.")
 
                     self.print("PLay a new game.")
                     self.cf.ITEMS_Pos = self.bkItemPos
 
-                print (str(Color) + ": Ceva: " + str(ifZar) + " cu: " + str(iCheck))
+                print (str(Color) + ": Something: " + str(ifZar) + " with: " + str(iCheck))
 
         if (i == 0 and self.zar < 5):
             self.cf.ITEMS_Pos[pos][1] = ColorWin[self.zar][0]
@@ -408,7 +408,7 @@ class Ludo:
                 oFound = i
 
         if (oFound == -1):
-            self.print("Pionul selectat nu poate fi mutat.")
+            self.print("The selected pawn can not be moved.")
             return 0
         
         if (oFound + self.zar >= len(self.cf.MAP)):

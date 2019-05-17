@@ -68,9 +68,9 @@ def startGame():
 gWindow.geometry("300x170")
 gWindow.resizable(False, False)
 
-gWindow.title("LUDO: Alege textura dorita.")
+gWindow.title("LUDO: Choose the desired texture.")
 
-pInfo = Label(gWindow, text = "Alege textura dorita pentru fiecare jucator:")
+pInfo = Label(gWindow, text = "Choose the desired texture for each player:")
 pInfo.place(x = 5, y = 10)
 
 
@@ -167,7 +167,7 @@ Y3.place(x = 225, y = 100)
 
 
 
-bSave = Button(gWindow, text = "Start Joc", command = startGame)
+bSave = Button(gWindow, text = "Start Game", command = startGame)
 bSave.place(x = 100, y = 130)
 
 gWindow.mainloop()
