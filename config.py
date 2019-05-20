@@ -1,75 +1,23 @@
 #!/usr/bin/python3
 
-# 1 -> Green
-GREEN_Pos = [
-    [163, 123],
-    [125, 161],
-    [201, 161],
-    [163, 199],
-]
-GREEN_Start = [106, 294]
-GREEN_Win = [
-    [106, 333],
-    [144, 333],
-    [182, 333],
-    [220, 333],
-    [258, 333],
-]
-GREEN_End = [
-    [296, 355],
-    [296, 340],
-    [296, 325],
-    [296, 310],
-]
-GREEN_Play = 0
 
-# 2 -> Red
-RED_Pos = [
-    [506, 123],
-    [468, 161],
-    [544, 161],
-    [506, 199],
-]
-RED_Start = [372, 104]
-RED_Win = [
-    [334, 104],
-    [334, 142],
-    [334, 180],
-    [334, 218],
-    [334, 256],
-]
-RED_End = [
-    [300, 285],
-    [320, 285],
-    [340, 285],
-    [372, 285],
-]
-RED_Play = 0
+# Function For Track Coordinates Calculations
+def rotateTrack(track):
+    newTrack = []
+    for i in track:
+        newTrack.append(rotateCoord(i))
+    return newTrack
 
-# 3 -> Blue
-BLUE_Pos = [
-    [506, 466],
-    [468, 504],
-    [544, 504],
-    [506, 542],
-]
-BLUE_Start = [563, 371]
-BLUE_Win = [
-    [563, 333],
-    [525, 333],
-    [487, 333],
-    [449, 333],
-    [411, 333],
-]
-BLUE_End = [
-    [372, 347],
-    [372, 332],
-    [372, 317],
-    [372, 302],
-]
-BLUE_Play = 0
+def rotateCoord(coord):
+    x = coord[0] - CENTER_Pos[0]
+    y = coord[1] - CENTER_Pos[1]
+    newX = CENTER_Pos[0]-y
+    newY = CENTER_Pos[1]+x
+    return [newX, newY]
 
-# 4 -> Yellow
+CENTER_Pos = [330, 335]
+
+# 1 -> Yellow
 YELLOW_Pos = [
     [503, 417],
     [503, 467],
@@ -92,51 +40,65 @@ YELLOW_End = [
 ]
 YELLOW_Play = 0
 
+# 2 -> Blue
+BLUE_Pos = rotateTrack(YELLOW_Pos)
+BLUE_Start = rotateCoord(YELLOW_Start)
 
-MAP = [
-    GREEN_Start,     # START GREEN  [0]
-    [144, 294],
-    [182, 294],
-    [220, 294],
-    [258, 294],
-    [296, 256],
-    [296, 218],
-    [296, 180],
-    [296, 142],
-    [296, 104],
-    [296, 66],
-    [334, 66],
-    [372, 66],
+BLUE_Win = [
+    [563, 333],
+    [525, 333],
+    [487, 333],
+    [449, 333],
+    [411, 333],
+]
+BLUE_End = [
+    [372, 347],
+    [372, 332],
+    [372, 317],
+    [372, 302],
+]
+BLUE_Play = 0
 
-    RED_Start,      # START RED  [13]
-    [372, 142],
-    [372, 180],
-    [372, 218],
-    [372, 256],
-    [411, 294],
-    [449, 294],
-    [487, 294],
-    [525, 294],
-    [563, 294],
-    [601, 294],
-    [601, 333],
-    [601, 371],
+# 3 -> Red
+RED_Pos = rotateTrack(BLUE_Pos)
+RED_Start = rotateCoord(BLUE_Start)
 
-    BLUE_Start,     # START BLUE [27]
-    [525, 371],
-    [487, 371],
-    [449, 371],
-    [411, 371],
-    [372, 409],
-    [372, 447],
-    [372, 485],
-    [372, 523],
-    [372, 561],
-    [372, 599],
-    [334, 599],
-    [296, 599],
+RED_Win = [
+    [334, 104],
+    [334, 142],
+    [334, 180],
+    [334, 218],
+    [334, 256],
+]
+RED_End = [
+    [300, 285],
+    [320, 285],
+    [340, 285],
+    [372, 285],
+]
+RED_Play = 0
 
-    YELLOW_Start,     # START YELLOW [40]
+# 4 -> Green
+GREEN_Pos = rotateTrack(RED_Pos)
+GREEN_Start = rotateCoord(RED_Start)
+
+GREEN_Win = [
+    [106, 333],
+    [144, 333],
+    [182, 333],
+    [220, 333],
+    [258, 333],
+]
+GREEN_End = [
+    [296, 355],
+    [296, 340],
+    [296, 325],
+    [296, 310],
+]
+GREEN_Play = 0
+
+YELLOW_TRACK = [
+    YELLOW_Start,
     [550, 468],
     [550, 518],
     [598, 518],
@@ -152,8 +114,14 @@ MAP = [
     [353, 592],
     [353, 542],
     [302, 542],
-    [247, 542],
+    [247, 542]
 ]
+BLUE_TRACK = rotateTrack(YELLOW_TRACK)
+RED_TRACK = rotateTrack(BLUE_TRACK)
+GREEN_TRACK = rotateTrack(RED_TRACK)
+
+
+MAP = YELLOW_TRACK + BLUE_TRACK + RED_TRACK + GREEN_TRACK
 
 ITEMS_Pos = [
     ["GREEN", GREEN_Pos[0][0], GREEN_Pos[0][1], False],
@@ -186,3 +154,5 @@ PList = [
     "BLUE",
     "YELLOW",
 ]
+
+    
