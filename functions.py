@@ -11,7 +11,7 @@ from tkinter import messagebox
 
 # Ludo Functions
 class Ludo:
-    def __init__(self, config, screen, gameDisplay, bg, pionsColor):
+    def __init__(self, config, screen, gameDisplay, bg):
         
         self.cf = config
         
@@ -20,8 +20,6 @@ class Ludo:
         self.gameDisplay = gameDisplay
         
         self.bg = bg
-        
-        self.pionsColor = pionsColor
 
         self.sound = a.Audio()
 
@@ -116,13 +114,13 @@ class Ludo:
 
     def player(self, color):
         if (color == "GREEN"):
-            return pygame.image.load("resources/img-ludo/pion_green" +str(self.pionsColor[0])+ ".png")
+            return pygame.image.load("resources/img-ludo/pion_green0.png")
         elif (color == "RED"):
-            return pygame.image.load("resources/img-ludo/pion_red" +str(self.pionsColor[1])+ ".png")
+            return pygame.image.load("resources/img-ludo/pion_red0.png")
         elif (color == "BLUE"):
-            return pygame.image.load("resources/img-ludo/pion_blue" +str(self.pionsColor[2])+ ".png")
+            return pygame.image.load("resources/img-ludo/pion_blue0.png")
         else:
-            return pygame.image.load("resources/img-ludo/pion_yellow" +str(self.pionsColor[3])+ ".png")
+            return pygame.image.load("resources/img-ludo/pion_yellow0.png")
 
     def Pions(self):
         for i in range(0, len(self.cf.ITEMS_Pos)):
