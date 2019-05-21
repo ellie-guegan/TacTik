@@ -141,10 +141,10 @@ class Ludo:
             
             if ( player == "GREEN"):
                 if (
-                    self.cf.ITEMS_Pos[0][1] == self.cf.GREEN_Pos[0][0] and self.cf.ITEMS_Pos[0][2] == self.cf.GREEN_Pos[0][1] and
-                    self.cf.ITEMS_Pos[1][1] == self.cf.GREEN_Pos[1][0] and self.cf.ITEMS_Pos[1][2] == self.cf.GREEN_Pos[1][1] and
-                    self.cf.ITEMS_Pos[2][1] == self.cf.GREEN_Pos[2][0] and self.cf.ITEMS_Pos[2][2] == self.cf.GREEN_Pos[2][1] and
-                    self.cf.ITEMS_Pos[3][1] == self.cf.GREEN_Pos[3][0] and self.cf.ITEMS_Pos[3][2] == self.cf.GREEN_Pos[3][1]
+                    self.cf.ITEMS_Pos[0][1] == self.cf.GREEN_Start_Storage[0][0] and self.cf.ITEMS_Pos[0][2] == self.cf.GREEN_Start_Storage[0][1] and
+                    self.cf.ITEMS_Pos[1][1] == self.cf.GREEN_Start_Storage[1][0] and self.cf.ITEMS_Pos[1][2] == self.cf.GREEN_Start_Storage[1][1] and
+                    self.cf.ITEMS_Pos[2][1] == self.cf.GREEN_Start_Storage[2][0] and self.cf.ITEMS_Pos[2][2] == self.cf.GREEN_Start_Storage[2][1] and
+                    self.cf.ITEMS_Pos[3][1] == self.cf.GREEN_Start_Storage[3][0] and self.cf.ITEMS_Pos[3][2] == self.cf.GREEN_Start_Storage[3][1]
                 ):
                     self.print("GREEN: There are no moves available.")
                     self.move = True
@@ -153,10 +153,10 @@ class Ludo:
                     self.print("GREEN: Something")
             elif ( player == "RED" ):
                 if (
-                    self.cf.ITEMS_Pos[4][1] == self.cf.RED_Pos[0][0] and self.cf.ITEMS_Pos[4][2] == self.cf.RED_Pos[0][1] and
-                    self.cf.ITEMS_Pos[5][1] == self.cf.RED_Pos[1][0] and self.cf.ITEMS_Pos[5][2] == self.cf.RED_Pos[1][1] and
-                    self.cf.ITEMS_Pos[6][1] == self.cf.RED_Pos[2][0] and self.cf.ITEMS_Pos[6][2] == self.cf.RED_Pos[2][1] and
-                    self.cf.ITEMS_Pos[7][1] == self.cf.RED_Pos[3][0] and self.cf.ITEMS_Pos[7][2] == self.cf.RED_Pos[3][1]
+                    self.cf.ITEMS_Pos[4][1] == self.cf.RED_Start_Storage[0][0] and self.cf.ITEMS_Pos[4][2] == self.cf.RED_Start_Storage[0][1] and
+                    self.cf.ITEMS_Pos[5][1] == self.cf.RED_Start_Storage[1][0] and self.cf.ITEMS_Pos[5][2] == self.cf.RED_Start_Storage[1][1] and
+                    self.cf.ITEMS_Pos[6][1] == self.cf.RED_Start_Storage[2][0] and self.cf.ITEMS_Pos[6][2] == self.cf.RED_Start_Storage[2][1] and
+                    self.cf.ITEMS_Pos[7][1] == self.cf.RED_Start_Storage[3][0] and self.cf.ITEMS_Pos[7][2] == self.cf.RED_Start_Storage[3][1]
                 ):
                     self.print("RED: There are no moves available.")
                     self.move = True
@@ -165,10 +165,10 @@ class Ludo:
                     self.print("RED: Something")
             elif ( player == "BLUE" ):
                 if (
-                    self.cf.ITEMS_Pos[8][1] == self.cf.BLUE_Pos[0][0] and self.cf.ITEMS_Pos[8][2] == self.cf.BLUE_Pos[0][1] and
-                    self.cf.ITEMS_Pos[9][1] == self.cf.BLUE_Pos[1][0] and self.cf.ITEMS_Pos[9][2] == self.cf.BLUE_Pos[1][1] and
-                    self.cf.ITEMS_Pos[10][1] == self.cf.BLUE_Pos[2][0] and self.cf.ITEMS_Pos[10][2] == self.cf.BLUE_Pos[2][1] and
-                    self.cf.ITEMS_Pos[11][1] == self.cf.BLUE_Pos[3][0] and self.cf.ITEMS_Pos[11][2] == self.cf.BLUE_Pos[3][1]
+                    self.cf.ITEMS_Pos[8][1] == self.cf.BLUE_Start_Storage[0][0] and self.cf.ITEMS_Pos[8][2] == self.cf.BLUE_Start_Storage[0][1] and
+                    self.cf.ITEMS_Pos[9][1] == self.cf.BLUE_Start_Storage[1][0] and self.cf.ITEMS_Pos[9][2] == self.cf.BLUE_Start_Storage[1][1] and
+                    self.cf.ITEMS_Pos[10][1] == self.cf.BLUE_Start_Storage[2][0] and self.cf.ITEMS_Pos[10][2] == self.cf.BLUE_Start_Storage[2][1] and
+                    self.cf.ITEMS_Pos[11][1] == self.cf.BLUE_Start_Storage[3][0] and self.cf.ITEMS_Pos[11][2] == self.cf.BLUE_Start_Storage[3][1]
                 ):
                     self.print("BLUE: There are no moves available.")
                     self.move = True
@@ -177,10 +177,10 @@ class Ludo:
                     self.print("BLUE: Something")
             elif ( player == "YELLOW" ):
                 if (
-                    self.cf.ITEMS_Pos[12][1] == self.cf.YELLOW_Pos[0][0] and self.cf.ITEMS_Pos[12][2] == self.cf.YELLOW_Pos[0][1] and
-                    self.cf.ITEMS_Pos[13][1] == self.cf.YELLOW_Pos[1][0] and self.cf.ITEMS_Pos[13][2] == self.cf.YELLOW_Pos[1][1] and
-                    self.cf.ITEMS_Pos[14][1] == self.cf.YELLOW_Pos[2][0] and self.cf.ITEMS_Pos[14][2] == self.cf.YELLOW_Pos[2][1] and
-                    self.cf.ITEMS_Pos[15][1] == self.cf.YELLOW_Pos[3][0] and self.cf.ITEMS_Pos[15][2] == self.cf.YELLOW_Pos[3][1]
+                    self.cf.ITEMS_Pos[12][1] == self.cf.YELLOW_Start_Storage[0][0] and self.cf.ITEMS_Pos[12][2] == self.cf.YELLOW_Start_Storage[0][1] and
+                    self.cf.ITEMS_Pos[13][1] == self.cf.YELLOW_Start_Storage[1][0] and self.cf.ITEMS_Pos[13][2] == self.cf.YELLOW_Start_Storage[1][1] and
+                    self.cf.ITEMS_Pos[14][1] == self.cf.YELLOW_Start_Storage[2][0] and self.cf.ITEMS_Pos[14][2] == self.cf.YELLOW_Start_Storage[2][1] and
+                    self.cf.ITEMS_Pos[15][1] == self.cf.YELLOW_Start_Storage[3][0] and self.cf.ITEMS_Pos[15][2] == self.cf.YELLOW_Start_Storage[3][1]
                 ):
                     self.print("YELLOW: There are no moves available.")
                     self.move = True
@@ -205,7 +205,7 @@ class Ludo:
         if ( player == "GREEN"):
             if (pos >=0 and pos <= 3):
                 for i in range(0, 4):
-                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.GREEN_Pos[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.GREEN_Pos[i][1] and self.zar == 6):
+                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.GREEN_Start_Storage[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.GREEN_Start_Storage[i][1] and self.zar == 6):
                         self.cf.ITEMS_Pos[pos][1] = self.cf.GREEN_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.GREEN_Start[1]
                         self.sound.PlayStart()
@@ -219,7 +219,7 @@ class Ludo:
         elif ( player == "RED" ):
             if (pos >= 4 and pos <= 7):
                 for i in range(0, 4):
-                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.RED_Pos[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.RED_Pos[i][1] and self.zar == 6):
+                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.RED_Start_Storage[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.RED_Start_Storage[i][1] and self.zar == 6):
                         self.cf.ITEMS_Pos[pos][1] = self.cf.RED_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.RED_Start[1]
                         self.sound.PlayStart()
@@ -233,7 +233,7 @@ class Ludo:
         elif ( player == "BLUE" ):
             if (pos >= 8 and pos <= 11):
                 for i in range(0, 4):
-                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.BLUE_Pos[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.BLUE_Pos[i][1] and self.zar == 6):
+                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.BLUE_Start_Storage[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.BLUE_Start_Storage[i][1] and self.zar == 6):
                         self.cf.ITEMS_Pos[pos][1] = self.cf.BLUE_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.BLUE_Start[1]
                         self.sound.PlayStart()
@@ -247,7 +247,7 @@ class Ludo:
         elif ( player == "YELLOW" ):
             if (pos >= 12 and pos <= 15):
                 for i in range(0, 4):
-                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.YELLOW_Pos[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.YELLOW_Pos[i][1] and self.zar == 6):
+                    if (self.cf.ITEMS_Pos[pos][1] == self.cf.YELLOW_Start_Storage[i][0] and self.cf.ITEMS_Pos[pos][2] == self.cf.YELLOW_Start_Storage[i][1] and self.zar == 6):
                         self.cf.ITEMS_Pos[pos][1] = self.cf.YELLOW_Start[0]
                         self.cf.ITEMS_Pos[pos][2] = self.cf.YELLOW_Start[1]
                         self.sound.PlayStart()
