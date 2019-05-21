@@ -110,21 +110,10 @@ class Ludo:
         self.PlayerMove()
 
         #time.sleep(0.5)
-        
-
-    def player(self, color):
-        if (color == "GREEN"):
-            return pygame.image.load("resources/img-ludo/pion_green0.png")
-        elif (color == "RED"):
-            return pygame.image.load("resources/img-ludo/pion_red0.png")
-        elif (color == "BLUE"):
-            return pygame.image.load("resources/img-ludo/pion_blue0.png")
-        else:
-            return pygame.image.load("resources/img-ludo/pion_yellow0.png")
 
     def Pions(self):
         for i in range(0, len(self.cf.ITEMS_Pos)):
-            self.screen.blit(self.player(self.cf.ITEMS_Pos[i][0]), (self.cf.ITEMS_Pos[i][1], self.cf.ITEMS_Pos[i][2]))
+            self.screen.blit(self.cf.getPlayerToken(self.cf.ITEMS_Pos[i][0]), (self.cf.ITEMS_Pos[i][1], self.cf.ITEMS_Pos[i][2]))
     
     def Number(self):
         return random.randint(1, 6)
@@ -208,7 +197,7 @@ class Ludo:
 
     def Click_Pion(self, pos):
         if (self.move == True):
-            self.print("The selected pawn can not be moved.")
+            self.print("The selected pawn cannot be moved.")
             return 0
 
         player = self.cf.PList[self.cf.CurrentPos]
@@ -222,20 +211,6 @@ class Ludo:
                         self.sound.PlayStart()
                         self.print("GREEN: The pawn came out of the house.")
                         self.move = True
-                        return 0
-
-                for i in range(0, len(self.cf.GREEN_Win)):
-                    if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.GREEN_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.GREEN_Win[i][1]):
-                        self.print("GREEN: You've come to a final area.")
-
-                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
-
-                        #GREEN_Play
-                        # GREEN_End
-                        
-                        self.MoveFinalEnd(i, pos, "GREEN",  self.cf.GREEN_End, self.cf.GREEN_Play, self.cf.GREEN_Win)
-
-                        #self.move = True
                         return 0
 
                 self.print("GREEN: try", self.zar)
@@ -252,17 +227,6 @@ class Ludo:
                         self.move = True
                         return 0
 
-                for i in range(0, len(self.cf.RED_Win)):
-                    if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.RED_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.RED_Win[i][1]):
-                        self.print("RED: You've come to a final area.")
-
-                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
-
-                        self.MoveFinalEnd(i, pos, "RED",  self.cf.RED_End, self.cf.RED_Play, self.cf.RED_Win)
-
-                        #self.move = True
-                        return 0
-
                 self.print("RED: try", self.zar)
                 self.MoveToNext(pos)
 
@@ -275,17 +239,6 @@ class Ludo:
                         self.sound.PlayStart()
                         self.print("BLUE: The pawn came out of the house.")
                         self.move = True
-                        return 0
-
-                for i in range(0, len(self.cf.BLUE_Win)):
-                    if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.BLUE_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.BLUE_Win[i][1]):
-                        self.print("BLUE: You've come to a final area.")
-
-                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
-
-                        self.MoveFinalEnd(i, pos, "BLUE",  self.cf.BLUE_End, self.cf.BLUE_Play, self.cf.BLUE_Win)
-
-                        #self.move = True
                         return 0
                     
                 self.print("BLUE: try", self.zar)
@@ -302,17 +255,6 @@ class Ludo:
                         self.move = True
                         return 0
 
-                for i in range(0, len(self.cf.YELLOW_Win)):
-                    if (self.cf.ITEMS_Pos[pos][1] ==  self.cf.YELLOW_Win[i][0] and  self.cf.ITEMS_Pos[pos][2] == self.cf.YELLOW_Win[i][1]):
-                        self.print("YELLOW: You've come to a final area.")
-
-                        print ("Current stream: " + str(self.zar) + " Pos: " + str(i))
-
-                        self.MoveFinalEnd(i, pos, "YELLOW",  self.cf.YELLOW_End, self.cf.YELLOW_Play, self.cf.YELLOW_Win)
-
-                        #self.move = True
-                        return 0
-
                 self.print("YELLOW: try", self.zar)
                 self.MoveToNext(pos)
 
@@ -320,178 +262,32 @@ class Ludo:
             self.print("Unknown Player: {" +str(player)+ "}.")
         self.print("")
 
-    def MoveFinalEnd(self, i, pos, Color,  ColorEnd, ColorPlay, ColorWin):
-        
-        print ("Me too me too", pos, Color, ColorEnd, ColorPlay, ColorWin)
-        ifZar = 0
-        iCheck = 5
-        while (ifZar < 5):
-            ifZar = ifZar + 1
-            iCheck = iCheck - 1
-            if (i == iCheck and self.zar == ifZar):
-
-                self.cf.ITEMS_Pos[pos][1] = ColorEnd[ColorPlay][0]
-                self.cf.ITEMS_Pos[pos][2] = ColorEnd[ColorPlay][1]
-                self.sound.PlayMove()
-                self.move = True
-
-                WinGg = False
-
-                if (Color == "GREEN"):
-                    self.cf.GREEN_Play = self.cf.GREEN_Play + 1
-                    if (self.cf.GREEN_Play == 4):
-                        WinGg = True
-
-                elif (Color == "RED"):
-                    self.cf.RED_Play = self.cf.RED_Play + 1
-                    if (self.cf.RED_Play == 4):
-                        WinGg = True
-
-                elif (Color == "BLUE"):
-                    self.cf.BLUE_Play = self.cf.BLUE_Play + 1
-                    if (self.cf.BLUE_Play == 4):
-                        WinGg = True
-
-                else:
-                    self.cf.YELLOW_Play = self.cf.YELLOW_Play + 1
-                    if (self.cf.YELLOW_Play == 4):
-                        WinGg = True
-                
-                if (WinGg == True):
-                    self.sound.PlayWin()
-                    messagebox.showinfo("Ludo", "The player " +str(Color)+ " won.")
-
-                    self.print("PLay a new game.")
-                    self.cf.ITEMS_Pos = self.bkItemPos
-
-                print (str(Color) + ": Something: " + str(ifZar) + " with: " + str(iCheck))
-
-        if (i == 0 and self.zar < 5):
-            self.cf.ITEMS_Pos[pos][1] = ColorWin[self.zar][0]
-            self.cf.ITEMS_Pos[pos][2] = ColorWin[self.zar][1]
-            self.sound.PlayMove()
-            self.move = True
-
-            print (str(Color) + ": Move 1" )
-
-        elif (i == 1 and self.zar < 3): 
-            self.cf.ITEMS_Pos[pos][1] = ColorWin[self.zar + 1][0]
-            self.cf.ITEMS_Pos[pos][2] = ColorWin[self.zar + 1][1]
-            self.sound.PlayMove()
-            self.move = True
-
-            print (str(Color) + ": Move 2" )
-        elif (i == 2 and self.zar < 3): 
-            self.cf.ITEMS_Pos[pos][1] = ColorWin[self.zar + 2][0]
-            self.cf.ITEMS_Pos[pos][2] = ColorWin[self.zar + 2][1]
-            self.sound.PlayMove()
-            self.move = True
-
-            print (str(Color) + ": Move 3" )
-        elif (i == 3 and self.zar < 2): 
-            self.cf.ITEMS_Pos[pos][1] = ColorWin[self.zar + 3][0]
-            self.cf.ITEMS_Pos[pos][2] = ColorWin[self.zar + 3][1]
-            self.sound.PlayMove()
-            self.move = True
-
-            print (str(Color) + ": Move 4" )
-
     def MoveToNext(self, pos):
         x = self.cf.ITEMS_Pos[pos][1]
         y = self.cf.ITEMS_Pos[pos][2]
 
-        oFound = -1
+        currentIndexInMap = -1
         for i in range(0, len(self.cf.MAP)):
             if (self.cf.MAP[i][0] == x and self.cf.MAP[i][1] == y):
-                oFound = i
+                currentIndexInMap = i
 
-        if (oFound == -1):
-            self.print("The selected pawn can not be moved.")
+        if (currentIndexInMap == -1):
+            self.print("The selected pawn can not be moved (didn't find it in the map).")
             return 0
         
-        if (oFound + self.zar >= len(self.cf.MAP)):
-            found = oFound + self.zar - len(self.cf.MAP)
+        if (currentIndexInMap + self.zar >= len(self.cf.MAP)):
+            self.print("The token has exceeded the map, goes back around for a loop!")
+            nextIndexInMap = currentIndexInMap + self.zar - len(self.cf.MAP)
         else:
-            found = oFound + self.zar
-                
-        if ( found > -1):
-            player = self.cf.PList[self.cf.CurrentPos]
-            mvx = True
+            nextIndexInMap = currentIndexInMap + self.zar
 
-            if ( player == "GREEN"):
-                if (oFound + self.zar >= 51 and oFound < 51):
-                    print ("GREEN: Must be moved to tot")
-                    
-                    found = oFound + self.zar - 51
-                    print (found)
+        player = self.cf.PList[self.cf.CurrentPos]
 
-                    self.cf.ITEMS_Pos[pos][1] = self.cf.GREEN_Win[found][0]
-                    self.cf.ITEMS_Pos[pos][2] = self.cf.GREEN_Win[found][1]
-                    self.sound.PlayMove()
-                    self.move = True
-
-                    mvx = False
-                    # GREEN_Win
-
-            elif ( player == "RED" ):
-                if (oFound + self.zar >= 11 and oFound < 11):
-                    # RED_Win
-                    print ("RED: Must be moved to tot")
-
-                    found = oFound + self.zar - 12
-                    print (found)
-
-                    self.cf.ITEMS_Pos[pos][1] = self.cf.RED_Win[found][0]
-                    self.cf.ITEMS_Pos[pos][2] = self.cf.RED_Win[found][1]
-                    self.sound.PlayMove()
-                    self.move = True
-
-                    mvx = False
-
-
-            elif ( player == "BLUE" ):
-                if (oFound + self.zar >= 25 and oFound < 25):
-                    # BLUE_Win
-                    print ("BLUE: Must be moved to tot")
-
-                    found = oFound + self.zar - 25
-                    print (found)
-
-                    self.cf.ITEMS_Pos[pos][1] = self.cf.BLUE_Win[found][0]
-                    self.cf.ITEMS_Pos[pos][2] = self.cf.BLUE_Win[found][1]
-                    self.sound.PlayMove()
-                    self.move = True
-
-                    mvx = False
-
-
-            elif ( player == "YELLOW" ):
-                if (oFound + self.zar >= 38 and oFound < 38):
-                    # YELLOW_Win
-                    print ("YELLOW: Must be moved to tot")
-
-                    found = oFound + self.zar - 38
-                    print (found)
-
-                    self.cf.ITEMS_Pos[pos][1] = self.cf.YELLOW_Win[found][0]
-                    self.cf.ITEMS_Pos[pos][2] = self.cf.YELLOW_Win[found][1]
-                    self.sound.PlayMove()
-                    self.move = True
-
-                    mvx = False
-
-            else:
-                self.print("Unknown Player: {" +str(player)+ "}.")
-
-
-            if (mvx == True):
-                print("move here ")
-                self.cf.ITEMS_Pos[pos][1] = self.cf.MAP[found][0]
-                self.cf.ITEMS_Pos[pos][2] = self.cf.MAP[found][1]
-                self.sound.PlayMove()
-                self.move = True
-            else:
-                print ("Not move")
+        print("Moving token from " + str(self.cf.ITEMS_Pos[pos]) + " to " + str(self.cf.MAP[nextIndexInMap]))
+        self.cf.ITEMS_Pos[pos][1] = self.cf.MAP[nextIndexInMap][0]
+        self.cf.ITEMS_Pos[pos][2] = self.cf.MAP[nextIndexInMap][1]
+        self.sound.PlayMove()
+        self.move = True
 
     def Unlock_Move(self):
         if (self.move == False):

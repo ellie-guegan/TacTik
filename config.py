@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 
+import pygame
 
-# Function For Track Coordinates Calculations
+# ------------------------------------------
+# Track coordinates calculations
+# ------------------------------------------
 def rotateTrack(track):
     newTrack = []
     for i in track:
@@ -15,6 +18,10 @@ def rotateCoord(coord):
     newY = CENTER_Pos[1]+x
     return [newX, newY]
 
+# ------------------------------------------
+# Background hardcoded coordinates
+# ------------------------------------------
+
 CENTER_Pos = [330, 335]
 
 # 1 -> Yellow
@@ -25,13 +32,6 @@ YELLOW_Pos = [
     [503, 566],
 ]
 YELLOW_Start = [550, 418]
-YELLOW_Win = [
-    [334, 561],
-    [334, 523],
-    [334, 485],
-    [334, 447],
-    [334, 409],
-]
 YELLOW_End = [
     [305, 370],
     [325, 370],
@@ -44,13 +44,6 @@ YELLOW_Play = 0
 BLUE_Pos = rotateTrack(YELLOW_Pos)
 BLUE_Start = rotateCoord(YELLOW_Start)
 
-BLUE_Win = [
-    [563, 333],
-    [525, 333],
-    [487, 333],
-    [449, 333],
-    [411, 333],
-]
 BLUE_End = [
     [372, 347],
     [372, 332],
@@ -63,13 +56,6 @@ BLUE_Play = 0
 RED_Pos = rotateTrack(BLUE_Pos)
 RED_Start = rotateCoord(BLUE_Start)
 
-RED_Win = [
-    [334, 104],
-    [334, 142],
-    [334, 180],
-    [334, 218],
-    [334, 256],
-]
 RED_End = [
     [300, 285],
     [320, 285],
@@ -82,13 +68,6 @@ RED_Play = 0
 GREEN_Pos = rotateTrack(RED_Pos)
 GREEN_Start = rotateCoord(RED_Start)
 
-GREEN_Win = [
-    [106, 333],
-    [144, 333],
-    [182, 333],
-    [220, 333],
-    [258, 333],
-]
 GREEN_End = [
     [296, 355],
     [296, 340],
@@ -120,14 +99,13 @@ BLUE_TRACK = rotateTrack(YELLOW_TRACK)
 RED_TRACK = rotateTrack(BLUE_TRACK)
 GREEN_TRACK = rotateTrack(RED_TRACK)
 
-
 MAP = YELLOW_TRACK + BLUE_TRACK + RED_TRACK + GREEN_TRACK
 
 ITEMS_Pos = [
     ["GREEN", GREEN_Pos[0][0], GREEN_Pos[0][1], False],
     ["GREEN", GREEN_Pos[1][0], GREEN_Pos[1][1], False],
     ["GREEN", GREEN_Pos[2][0], GREEN_Pos[2][1], False],
-    ["GREEN", GREEN_Pos[3][0], GREEN_Pos[3][1]],
+    ["GREEN", GREEN_Pos[3][0], GREEN_Pos[3][1], False],
 
     ["RED", RED_Pos[0][0], RED_Pos[0][1], False],
     ["RED", RED_Pos[1][0], RED_Pos[1][1], False],
@@ -155,4 +133,21 @@ PList = [
     "YELLOW",
 ]
 
-    
+# ------------------------------------------
+# Token images
+# ------------------------------------------
+
+YELLOW_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_yellow0.png")
+BLUE_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_blue0.png")
+RED_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_red0.png")
+GREEN_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_green0.png")
+
+def getPlayerToken(color):
+    if (color == "GREEN"):
+        return GREEN_TOKEN_IMAGE
+    elif (color == "RED"):
+        return RED_TOKEN_IMAGE
+    elif (color == "BLUE"):
+        return BLUE_TOKEN_IMAGE
+    else:
+        return YELLOW_TOKEN_IMAGE
