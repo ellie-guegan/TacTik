@@ -33,23 +33,18 @@ def startGame():
     #fpsClock = pygame.time.Clock()
 
     while not done:
+        ludo.displayTokens()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-
-        pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_SPACE]:
-            ludo.Key_Event()
-
-        if pressed[pygame.K_LSHIFT] or pressed[pygame.K_RSHIFT]:
-            ludo.Unlock_Move()
-
-        ludo.Pions()
-
-        ludo.Click_Event(event)
+            elif event.type == pygame.KEYDOWN:
+                ludo.Key_Event()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                ludo.Click_Event(event)
         
-        ludo.CurrentPlayer()
-        ludo.CurrentZar()
+        ludo.PrintCurrentPlayer()
+        ludo.DisplayCurrentDice()
 
         pygame.display.flip()
 
