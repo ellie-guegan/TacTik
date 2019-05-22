@@ -40,9 +40,6 @@ class Ludo:
         ]
         
         self.font = pygame.font.SysFont("comicsansms", 20)
-        
-        self.bkItemPos = self.cf.ITEMS_Pos
-
 
     def print(self, text = "", text2 = ""):
         return print("[Ludo]: " +str(text)+ " " +str(text2))
@@ -60,7 +57,7 @@ class Ludo:
         if (self.cf.CurrentPos == -1):
             text = "Start the game."
         else:
-            player = self.cf.PList[self.cf.CurrentPos]
+            player = self.cf.Players[self.cf.CurrentPos]
             text = "It's his turn: " + str(player.color)
         self.displayTopMessage(text)
 
@@ -74,20 +71,16 @@ class Ludo:
             x, y = pygame.mouse.get_pos()
 
             # Click Pion
-            found = -1
-            player = self.cf.PList[self.cf.CurrentPos]
-            for i in range(0, len(self.cf.ITEMS_Pos)):
-                pColor = self.cf.ITEMS_Pos[i].player.color
-                pX = self.cf.ITEMS_Pos[i].coord[0]
-                pY = self.cf.ITEMS_Pos[i].coord[1]
-                if (player.color == pColor and x >= pX and x < pX + 35 and y >= pY and y < pY + 35):
-                    found = i
-                    break
-            if (found > -1):
-                self.print ("You clicked on a token of color " + self.cf.ITEMS_Pos[i].player.color)
-                self.Click_Pion(found)
-                return
-
+            player = self.cf.Players[self.cf.CurrentPos]
+            for token in self.cf.TOKENS_BY_COLOR[player.color]:
+                pX = token.coord[0]
+                pY = token.coord[1]
+                if (x >= pX and x < pX + 35 and y >= pY and y < pY + 35):
+                    self.print ("Found a token you clicked on!")
+                    self.Click_Pion(token)
+                    return
+            self.print ("You didn't click on any of your team's tokens. Let's check if you clicked on the die.")
+            
             # Check the dice
             if (x >= 295 and x < 405 and y >= 295 and y < 405):
                 self.Play()
@@ -113,17 +106,18 @@ class Ludo:
         #time.sleep(0.5)
 
     def displayTokens(self):
-        for token in self.cf.ITEMS_Pos:
-            self.screen.blit(token.tokenImage, (token.coord[0], token.coord[1]))
+        for tokens in self.cf.TOKENS_BY_COLOR.values():
+            for token in tokens:
+                self.screen.blit(token.tokenImage, (token.coord[0], token.coord[1]))
     
     def Play(self):
         if (self.currentHasMoved == True):
             # move to next player
             self.cf.CurrentPos += 1   
-            if (self.cf.CurrentPos >= self.cf.MaxPos):
+            if (self.cf.CurrentPos >= len(self.cf.Players)):
                 self.cf.CurrentPos = 0
 
-            self.print("It's his turn: " + self.cf.PList[self.cf.CurrentPos].color)
+            self.print("It's his turn: " + self.cf.Players[self.cf.CurrentPos].color)
 
             self.sound.PlayDice()
             self.dice = random.randint(1, 6)
@@ -131,10 +125,10 @@ class Ludo:
 
             self.currentHasMoved = False
         else:
-            self.print("Waiting for: " + str(self.cf.PList[self.cf.CurrentPos].color))
+            self.print("Waiting for: " + str(self.cf.Players[self.cf.CurrentPos].color))
 
     def checkValidMoves(self):
-        player = self.cf.PList[self.cf.CurrentPos]
+        player = self.cf.Players[self.cf.CurrentPos]
 
         if (self.dice < 6):
             # checking whether all tokens are at the start point
@@ -156,29 +150,26 @@ class Ludo:
             return False
 
 
-    def Click_Pion(self, pos):
+    def Click_Pion(self, token):
         if (self.currentHasMoved == True):
             self.print("[Click_Pion] The selected pawn cannot be moved.")
             return 0
 
-        player = self.cf.PList[self.cf.CurrentPos]
-        token = self.cf.ITEMS_Pos[pos]
-
         if (token.isInTheYard() and self.dice == 6):
             token.moveToFirstPosition()
             self.sound.PlayStart()
-            self.print("[Click_Pion] " + player.color + ": The pawn came out of the house.")
+            self.print("[Click_Pion] " + token.player.color + ": The pawn came out of the house.")
             self.currentHasMoved = True
             return 0
         else:
-            self.print("[Click_Pion] " + player.color + ": try", self.dice)
-            self.MoveToNext(pos)
+            self.print("[Click_Pion] " + token.player.color + ": try", self.dice)
+            self.MoveToNext(token)
 
         self.print("")
 
-    def MoveToNext(self, pos):
-        x = self.cf.ITEMS_Pos[pos].coord[0]
-        y = self.cf.ITEMS_Pos[pos].coord[1]
+    def MoveToNext(self, token):
+        x = token.coord[0]
+        y = token.coord[1]
 
         currentIndexInMap = -1
         for i in range(0, len(self.cf.MAP)):
@@ -196,8 +187,8 @@ class Ludo:
         else:
             nextIndexInMap = currentIndexInMap + self.dice
 
-        print("Moving token from " + str(self.cf.ITEMS_Pos[pos].coord) + " to " + str(self.cf.MAP[nextIndexInMap]))
-        self.cf.ITEMS_Pos[pos].moveTo(self.cf.MAP[nextIndexInMap])
+        print("Moving token from " + str(token.coord) + " to " + str(self.cf.MAP[nextIndexInMap]))
+        token.moveTo(self.cf.MAP[nextIndexInMap])
         self.sound.PlayMove()
         self.currentHasMoved = True
 

@@ -152,14 +152,11 @@ START_POSITION_COORDS = {
 
 MAP = YELLOW_TRACK + BLUE_TRACK + RED_TRACK + GREEN_TRACK
 
-PList = [
+Players = [
     Player("yellow"),
     Player("blue"),
     Player("red"),
     Player("green"), 
-]
-
-ITEMS_Pos = [
 ]
 
 TOKENS_BY_COLOR = {
@@ -169,12 +166,8 @@ TOKENS_BY_COLOR = {
     "green": [],
     }
  
-for player in PList:
+for player in Players:
     for coord in START_STORAGE_COORDS[player.color]:
-        newToken = Token(player, coord, False)
-        ITEMS_Pos.append(newToken)
-        TOKENS_BY_COLOR[player.color].append(newToken)
-
+        TOKENS_BY_COLOR[player.color].append(Token(player, coord, False))
 
 CurrentPos = -1
-MaxPos = 4
