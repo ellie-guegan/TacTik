@@ -153,43 +153,28 @@ START_POSITION_COORDS = {
 MAP = YELLOW_TRACK + BLUE_TRACK + RED_TRACK + GREEN_TRACK
 
 PList = [
-    Player("green"), 
-    Player("red"),
-    Player("blue"),
     Player("yellow"),
+    Player("blue"),
+    Player("red"),
+    Player("green"), 
 ]
 
 ITEMS_Pos = [
-    Token(PList[0], START_STORAGE_COORDS["green"][0], False),
-    Token(PList[0], START_STORAGE_COORDS["green"][1], False),
-    Token(PList[0], START_STORAGE_COORDS["green"][2], False),
-    Token(PList[0], START_STORAGE_COORDS["green"][3], False),
-
-    Token(PList[1], START_STORAGE_COORDS["red"][0], False),
-    Token(PList[1], START_STORAGE_COORDS["red"][1], False),
-    Token(PList[1], START_STORAGE_COORDS["red"][2], False),
-    Token(PList[1], START_STORAGE_COORDS["red"][3], False),
-
-    Token(PList[2], START_STORAGE_COORDS["blue"][0], False),
-    Token(PList[2], START_STORAGE_COORDS["blue"][1], False),
-    Token(PList[2], START_STORAGE_COORDS["blue"][2], False),
-    Token(PList[2], START_STORAGE_COORDS["blue"][3], False),
-
-    Token(PList[3], START_STORAGE_COORDS["yellow"][0], False),
-    Token(PList[3], START_STORAGE_COORDS["yellow"][1], False),
-    Token(PList[3], START_STORAGE_COORDS["yellow"][2], False),
-    Token(PList[3], START_STORAGE_COORDS["yellow"][3], False),
 ]
 
 TOKENS_BY_COLOR = {
-    "green": [],
-    "red": [],
-    "blue": [],
     "yellow": [],
+    "blue": [],
+    "red": [],
+    "green": [],
     }
+ 
+for player in PList:
+    for coord in START_STORAGE_COORDS[player.color]:
+        newToken = Token(player, coord, False)
+        ITEMS_Pos.append(newToken)
+        TOKENS_BY_COLOR[player.color].append(newToken)
 
-for token in ITEMS_Pos:
-    TOKENS_BY_COLOR[token.player.color].append(token)
 
 CurrentPos = -1
 MaxPos = 4

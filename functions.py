@@ -50,11 +50,11 @@ class Ludo:
 
     def displayTopMessage(self, text = ""):
         renderedText = self.font.render(text, True, (0, 60, 0))
-        self.screen.blit(renderedText, (78, 640))
+        self.screen.blit(renderedText, (self.cf.CENTER_Pos[0], self.cf.CENTER_Pos[1] - 40))
         
     def displayBottomMessage(self, text = ""):
         renderedText = self.font.render(text, True, (255, 0, 0))
-        self.screen.blit(renderedText, (78, 680))
+        self.screen.blit(renderedText, (self.cf.CENTER_Pos[0], self.cf.CENTER_Pos[1] + 40))
 
     def PrintCurrentPlayer(self):
         if (self.cf.CurrentPos == -1):
