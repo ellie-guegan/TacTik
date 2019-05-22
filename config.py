@@ -49,6 +49,10 @@ class Token:
     def moveToFirstPosition(self):
         self.coord[0] = START_POSITION_COORDS[self.player.color][0]
         self.coord[1] = START_POSITION_COORDS[self.player.color][1]    
+        
+    def moveTo(self, coord):
+        self.coord[0] = coord[0]
+        self.coord[1] = coord[1]
                 
 # ------------------------------------------
 # Track coordinates calculations
@@ -127,7 +131,6 @@ YELLOW_TRACK = [
     [353, 592],
     [353, 542],
     [302, 542],
-    [247, 542]
 ]
 BLUE_TRACK = rotateTrack(YELLOW_TRACK)
 RED_TRACK = rotateTrack(BLUE_TRACK)

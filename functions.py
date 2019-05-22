@@ -86,18 +86,22 @@ class Ludo:
             if (found > -1):
                 self.print ("You clicked on a token of color " + self.cf.ITEMS_Pos[i].player.color)
                 self.Click_Pion(found)
+                return
 
             # Check the dice
             if (x >= 295 and x < 405 and y >= 295 and y < 405):
                 self.Play()
-
                 self.print ("You clicked on the dice, with result: ", self.dice)
-
                 self.checkValidMoves()
+                return
 
             # Click No Move
             if (x >= 78 and x < 200 and y >= 680 and y < 700):
+                self.print ("You clicked on that weird no move zone, what's up with that...?")
                 self.Unlock_Move()
+                return
+                
+            self.print("We can't figure out what you clicked on. Nothing perhaps?")
 
          
     def Key_Event(self):
@@ -188,14 +192,12 @@ class Ludo:
         if (currentIndexInMap + self.dice >= len(self.cf.MAP)):
             self.print("The token has exceeded the map, goes back around for a loop!")
             nextIndexInMap = currentIndexInMap + self.dice - len(self.cf.MAP)
+            self.print("CurrentIndex " + str(currentIndexInMap) + " dice " + str(self.dice) + " length " + str(len(self.cf.MAP)) + " ---> next index " + str(nextIndexInMap))
         else:
             nextIndexInMap = currentIndexInMap + self.dice
 
-        player = self.cf.PList[self.cf.CurrentPos]
-
         print("Moving token from " + str(self.cf.ITEMS_Pos[pos].coord) + " to " + str(self.cf.MAP[nextIndexInMap]))
-        self.cf.ITEMS_Pos[pos].coord[0] = self.cf.MAP[nextIndexInMap][0]
-        self.cf.ITEMS_Pos[pos].coord[1] = self.cf.MAP[nextIndexInMap][1]
+        self.cf.ITEMS_Pos[pos].moveTo(self.cf.MAP[nextIndexInMap])
         self.sound.PlayMove()
         self.currentHasMoved = True
 
