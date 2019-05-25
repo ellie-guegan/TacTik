@@ -42,9 +42,6 @@ def startGame():
         
         ludo.refreshDisplay()
 
-        pygame.display.flip()
-
-        gameDisplay.blit(bg, (0, 0))
         #fpsClock.tick(30)
 
 startGame()

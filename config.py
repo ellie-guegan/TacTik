@@ -31,6 +31,15 @@ def _getColorTokenImage(color):
 class Player:
     def __init__(self, color):
         self.color = color
+        
+    def allTokensInTheYard(self):
+        allTokensForPlayer = TOKENS_BY_COLOR[self.color]
+            
+        allInYard = True
+        for token in allTokensForPlayer:
+            allInYard = allInYard and token.isInTheYard()
+                
+        return allInYard
     
 class Token:
     def __init__(self, player, coord, backHome):
