@@ -15,8 +15,8 @@ class GameStatus(Enum):
     WAITING_FOR_DICE_ROLL = 1
     WAITING_FOR_TOKEN_SELECTION = 2
 
-# Ludo Functions
-class Ludo:
+# Tactik Functions
+class TacTik:
     def __init__(self, screen, gameDisplay, bg):
         
         self.screen = screen
@@ -136,11 +136,24 @@ class Ludo:
         self.dice = random.randint(1, 6)
         self.print("Random dice roll yielded: " + str(self.dice))
         self.gameStatus = GameStatus.WAITING_FOR_TOKEN_SELECTION
-        
+
     def waitForDiceRoll(self):
         self.setMessage("It's your turn.")
         self.dice = 0
         self.gameStatus = GameStatus.WAITING_FOR_DICE_ROLL
+
+    def playDiceRoll(self):
+        self.rollDice()
+        self.print ("You rolled the dice, with result: ", self.dice)
+        
+        # check whether the current player has any valid moves
+        if (self.hasValidMoves()):
+            # if so, then wait for them to select their token
+            self.gameStatus == GameStatus.WAITING_FOR_TOKEN_SELECTION
+        else:
+            # if not, move on to the next player
+            self.setMessage("You have no valid moves.")
+            self.incrementPlayer()
 
     # ------------------------------------------------------------------------------------
     # Event handling
@@ -154,17 +167,7 @@ class Ludo:
             if (self.gameStatus == GameStatus.WAITING_FOR_DICE_ROLL):
                 # Check the dice
                 if (x >= 295 and x < 405 and y >= 295 and y < 405):
-                    self.rollDice()
-                    self.print ("[Click_Event] You clicked on the dice, with result: ", self.dice)
-                    
-                    # check whether the current player has any valid moves
-                    if (self.hasValidMoves()):
-                        # if so, then wait for them to select their token
-                        self.gameStatus == GameStatus.WAITING_FOR_TOKEN_SELECTION
-                    else:
-                        # if not, move on to the next player
-                        self.setMessage("You have no valid moves.")
-                        self.incrementPlayer()
+                    self.playDiceRoll()
                 else:
                     self.print("[Click_Event] You didn't click on the dice")
                     self.setMessage("Please click on the dice.")
@@ -190,17 +193,19 @@ class Ludo:
             # TODO: Should probably just ignore these
             raise ValueError("Unhandled event of type: " + str(event.type))
     
-    def Key_Event(self):
+    def Key_Event(self, event):
         self.print("     ------------ a KEY was pressed --------------------------")
-        if (self.gameStatus == GameStatus.WAITING_FOR_TOKEN_SELECTION):
-            self.setMessage("Please click on a token to play your turn.")
-            self.print ("[Key_Event] You pressed a key but we're waiting on a token.")
-        elif (self.gameStatus == GameStatus.WAITING_FOR_DICE_ROLL):
-            self.RollDice()
-            self.print ("[Key_Event] You dared with the dice: ", self.dice)
-            self.checkValidMoves()
+        if (event.key == pygame.K_SPACE):
+            self.print("The space key was pressed.")
+            if (self.gameStatus == GameStatus.WAITING_FOR_TOKEN_SELECTION):
+                self.setMessage("Please click on a token to play your turn.")
+                self.print ("[Key_Event] You pressed a key but we're waiting on a token.")
+            elif (self.gameStatus == GameStatus.WAITING_FOR_DICE_ROLL):
+                self.playDiceRoll()
+            else:
+                raise ValueError("Unknown game status: " + self.gameStatus)
         else:
-            raise ValueError("Unknown game status: " + self.gameStatus)
+            self.print("A key that is not the space key was pressed... ignore!")
 
     # ------------------------------------------------------------------------------------
     # Token movement
@@ -208,7 +213,7 @@ class Ludo:
     def hasValidMoves(self):
         player = self.getCurrentPlayer()
 
-        if (self.dice < 6):
+        if (self.dice < 5):
             # checking whether all tokens are at the start point
             if (player.allTokensInTheYard()):
                 self.print(player.color + ": There are no moves available, all tokens are in the yard.")
@@ -222,9 +227,9 @@ class Ludo:
             return True
 
     def moveSelectedToken(self, token):
-        # TODO:should only be allowed to get here by clicking on an allowed token... 
+        # TODO:should only be allowed to get here by clicking on an allowed token...
         if (token.isInTheYard()):
-            if (self.dice == 6):
+            if (self.dice == 6 or self.dice == 5):
                 token.moveToFirstPosition()
                 self.sound.PlayStart()
                 self.setMessage("You got out of the yard!")

@@ -7,10 +7,10 @@ import pygame
 # Token images
 # ------------------------------------------
 
-YELLOW_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_yellow0.png")
-BLUE_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_blue0.png")
-RED_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_red0.png")
-GREEN_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_green0.png")
+YELLOW_TOKEN_IMAGE = pygame.image.load("resources/img/token/YellowToken.png")
+BLUE_TOKEN_IMAGE = pygame.image.load("resources/img/token/BlueToken.png")
+RED_TOKEN_IMAGE = pygame.image.load("resources/img/token/RedToken.png")
+GREEN_TOKEN_IMAGE = pygame.image.load("resources/img/token/GreenToken.png")
 
 def _getColorTokenImage(color):
     if (color == "green"):
