@@ -25,20 +25,20 @@ class TacTik:
         self.sound = a.Audio()
         
         self.imgdiceEffect = [
-            pygame.image.load("resources/img-ludo/dice_0_1.png"),
-            pygame.image.load("resources/img-ludo/dice_0_2.png"),
-            pygame.image.load("resources/img-ludo/dice_0_3.png"),
-            pygame.image.load("resources/img-ludo/dice_0_4.png"),
+            pygame.image.load("resources/img/dice//dice_0_1.png"),
+            pygame.image.load("resources/img/dice//dice_0_2.png"),
+            pygame.image.load("resources/img/dice//dice_0_3.png"),
+            pygame.image.load("resources/img/dice//dice_0_4.png"),
         ]
         
         self.imgdice = [
             self.imgdiceEffect[0],
-            pygame.image.load("resources/img-ludo/dice_1.png"),
-            pygame.image.load("resources/img-ludo/dice_2.png"),
-            pygame.image.load("resources/img-ludo/dice_3.png"),
-            pygame.image.load("resources/img-ludo/dice_4.png"),
-            pygame.image.load("resources/img-ludo/dice_5.png"),
-            pygame.image.load("resources/img-ludo/dice_6.png"),
+            pygame.image.load("resources/img/dice//dice_1.png"),
+            pygame.image.load("resources/img/dice//dice_2.png"),
+            pygame.image.load("resources/img/dice//dice_3.png"),
+            pygame.image.load("resources/img/dice//dice_4.png"),
+            pygame.image.load("resources/img/dice//dice_5.png"),
+            pygame.image.load("resources/img/dice//dice_6.png"),
         ]
         
         self.font = pygame.font.SysFont("comicsansms", 20)
