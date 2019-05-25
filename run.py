@@ -27,7 +27,7 @@ def startGame():
     gameDisplay = pygame.display.set_mode((window_width, window_height))
     gameDisplay.blit(bg, (0, 0))
 
-    ludo = Ludo(screen, gameDisplay, bg)
+    tacTik = TacTik(screen, gameDisplay, bg)
 
     #fpsClock = pygame.time.Clock()
 
@@ -36,11 +36,11 @@ def startGame():
             if event.type == pygame.QUIT:
                 done = True
             elif event.type == pygame.KEYDOWN:
-                ludo.Key_Event()
+                tacTik.Key_Event(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                ludo.Click_Event(event)
+                tacTik.Click_Event(event)
         
-        ludo.refreshDisplay()
+        tacTik.refreshDisplay()
 
         #fpsClock.tick(30)
 

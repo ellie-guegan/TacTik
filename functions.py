@@ -136,11 +136,24 @@ class TacTik:
         self.dice = random.randint(1, 6)
         self.print("Random dice roll yielded: " + str(self.dice))
         self.gameStatus = GameStatus.WAITING_FOR_TOKEN_SELECTION
-        
+
     def waitForDiceRoll(self):
         self.setMessage("It's your turn.")
         self.dice = 0
         self.gameStatus = GameStatus.WAITING_FOR_DICE_ROLL
+
+    def playDiceRoll(self):
+        self.rollDice()
+        self.print ("You rolled the dice, with result: ", self.dice)
+        
+        # check whether the current player has any valid moves
+        if (self.hasValidMoves()):
+            # if so, then wait for them to select their token
+            self.gameStatus == GameStatus.WAITING_FOR_TOKEN_SELECTION
+        else:
+            # if not, move on to the next player
+            self.setMessage("You have no valid moves.")
+            self.incrementPlayer()
 
     # ------------------------------------------------------------------------------------
     # Event handling
@@ -179,19 +192,6 @@ class TacTik:
         else:
             # TODO: Should probably just ignore these
             raise ValueError("Unhandled event of type: " + str(event.type))
-    
-    def playDiceRoll(self):
-        self.rollDice()
-        self.print ("You rolled the dice, with result: ", self.dice)
-        
-        # check whether the current player has any valid moves
-        if (self.hasValidMoves()):
-            # if so, then wait for them to select their token
-            self.gameStatus == GameStatus.WAITING_FOR_TOKEN_SELECTION
-        else:
-            # if not, move on to the next player
-            self.setMessage("You have no valid moves.")
-            self.incrementPlayer()
     
     def Key_Event(self, event):
         self.print("     ------------ a KEY was pressed --------------------------")
