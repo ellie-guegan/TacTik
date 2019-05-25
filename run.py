@@ -6,7 +6,6 @@ import time
 from tkinter import *
 
 from functions import *
-import config as cf
 
 gWindow = Tk()
 
@@ -28,7 +27,7 @@ def startGame():
     gameDisplay = pygame.display.set_mode((window_width, window_height))
     gameDisplay.blit(bg, (0, 0))
 
-    ludo = Ludo(cf, screen, gameDisplay, bg)
+    ludo = Ludo(screen, gameDisplay, bg)
 
     #fpsClock = pygame.time.Clock()
 
@@ -36,24 +35,13 @@ def startGame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-
-        pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_SPACE]:
-            ludo.Key_Event()
-
-        if pressed[pygame.K_LSHIFT] or pressed[pygame.K_RSHIFT]:
-            ludo.Unlock_Move()
-
-        ludo.Pions()
-
-        ludo.Click_Event(event)
+            elif event.type == pygame.KEYDOWN:
+                ludo.Key_Event()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                ludo.Click_Event(event)
         
-        ludo.CurrentPlayer()
-        ludo.CurrentZar()
+        ludo.refreshDisplay()
 
-        pygame.display.flip()
-
-        gameDisplay.blit(bg, (0, 0))
         #fpsClock.tick(30)
 
 startGame()

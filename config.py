@@ -2,6 +2,67 @@
 
 import pygame
 
+
+# ------------------------------------------
+# Token images
+# ------------------------------------------
+
+YELLOW_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_yellow0.png")
+BLUE_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_blue0.png")
+RED_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_red0.png")
+GREEN_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_green0.png")
+
+def _getColorTokenImage(color):
+    if (color == "green"):
+        return GREEN_TOKEN_IMAGE
+    elif (color == "red"):
+        return RED_TOKEN_IMAGE
+    elif (color == "blue"):
+        return BLUE_TOKEN_IMAGE
+    elif (color == "yellow"):
+        return YELLOW_TOKEN_IMAGE
+    else:
+        raise ValueError("Not a supported color: " + color)
+
+# ------------------------------------------
+# Player and token classes
+# ------------------------------------------
+
+class Player:
+    def __init__(self, color):
+        self.color = color
+        
+    def allTokensInTheYard(self):
+        allTokensForPlayer = TOKENS_BY_COLOR[self.color]
+            
+        allInYard = True
+        for token in allTokensForPlayer:
+            allInYard = allInYard and token.isInTheYard()
+                
+        return allInYard
+    
+class Token:
+    def __init__(self, player, coord, backHome):
+        self.player = player
+        self.coord = [coord[0], coord[1]]
+        self.backHome = backHome
+        self.tokenImage = _getColorTokenImage(player.color)
+        
+    def isInTheYard(self):
+        for coords in START_STORAGE_COORDS[self.player.color]:
+            if (self.coord[0] == coords[0] and self.coord[1] == coords[1]):
+                return True
+        
+        return False
+    
+    def moveToFirstPosition(self):
+        self.coord[0] = START_POSITION_COORDS[self.player.color][0]
+        self.coord[1] = START_POSITION_COORDS[self.player.color][1]    
+        
+    def moveTo(self, coord):
+        self.coord[0] = coord[0]
+        self.coord[1] = coord[1]
+                
 # ------------------------------------------
 # Track coordinates calculations
 # ------------------------------------------
@@ -79,61 +140,43 @@ YELLOW_TRACK = [
     [353, 592],
     [353, 542],
     [302, 542],
-    [247, 542]
 ]
 BLUE_TRACK = rotateTrack(YELLOW_TRACK)
 RED_TRACK = rotateTrack(BLUE_TRACK)
 GREEN_TRACK = rotateTrack(RED_TRACK)
 
+START_STORAGE_COORDS = {
+    "yellow": YELLOW_Start_Storage,
+    "blue": BLUE_Start_Storage,
+    "red": RED_Start_Storage,
+    "green": GREEN_Start_Storage
+    }
+
+START_POSITION_COORDS = {
+    "yellow": YELLOW_Start,
+    "blue": BLUE_Start,
+    "red": RED_Start,
+    "green": GREEN_Start
+    }
+
 MAP = YELLOW_TRACK + BLUE_TRACK + RED_TRACK + GREEN_TRACK
 
-ITEMS_Pos = [
-    ["GREEN", GREEN_Start_Storage[0][0], GREEN_Start_Storage[0][1], False],
-    ["GREEN", GREEN_Start_Storage[1][0], GREEN_Start_Storage[1][1], False],
-    ["GREEN", GREEN_Start_Storage[2][0], GREEN_Start_Storage[2][1], False],
-    ["GREEN", GREEN_Start_Storage[3][0], GREEN_Start_Storage[3][1], False],
-
-    ["RED", RED_Start_Storage[0][0], RED_Start_Storage[0][1], False],
-    ["RED", RED_Start_Storage[1][0], RED_Start_Storage[1][1], False],
-    ["RED", RED_Start_Storage[2][0], RED_Start_Storage[2][1], False],
-    ["RED", RED_Start_Storage[3][0], RED_Start_Storage[3][1], False],
-
-    ["BLUE", BLUE_Start_Storage[0][0], BLUE_Start_Storage[0][1], False],
-    ["BLUE", BLUE_Start_Storage[1][0], BLUE_Start_Storage[1][1], False],
-    ["BLUE", BLUE_Start_Storage[2][0], BLUE_Start_Storage[2][1], False],
-    ["BLUE", BLUE_Start_Storage[3][0], BLUE_Start_Storage[3][1], False],
-
-    ["YELLOW", YELLOW_Start_Storage[0][0], YELLOW_Start_Storage[0][1], False],
-    ["YELLOW", YELLOW_Start_Storage[1][0], YELLOW_Start_Storage[1][1], False],
-    ["YELLOW", YELLOW_Start_Storage[2][0], YELLOW_Start_Storage[2][1], False],
-    ["YELLOW", YELLOW_Start_Storage[3][0], YELLOW_Start_Storage[3][1], False],
+Players = [
+    Player("yellow"),
+    Player("blue"),
+    Player("red"),
+    Player("green"), 
 ]
+
+TOKENS_BY_COLOR = {
+    "yellow": [],
+    "blue": [],
+    "red": [],
+    "green": [],
+    }
+ 
+for player in Players:
+    for coord in START_STORAGE_COORDS[player.color]:
+        TOKENS_BY_COLOR[player.color].append(Token(player, coord, False))
 
 CurrentPos = -1
-MaxPos = 4
-
-PList = [
-    "GREEN", 
-    "RED",
-    "BLUE",
-    "YELLOW",
-]
-
-# ------------------------------------------
-# Token images
-# ------------------------------------------
-
-YELLOW_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_yellow0.png")
-BLUE_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_blue0.png")
-RED_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_red0.png")
-GREEN_TOKEN_IMAGE = pygame.image.load("resources/img-ludo/pion_green0.png")
-
-def getPlayerToken(color):
-    if (color == "GREEN"):
-        return GREEN_TOKEN_IMAGE
-    elif (color == "RED"):
-        return RED_TOKEN_IMAGE
-    elif (color == "BLUE"):
-        return BLUE_TOKEN_IMAGE
-    else:
-        return YELLOW_TOKEN_IMAGE
