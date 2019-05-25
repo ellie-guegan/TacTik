@@ -23,7 +23,7 @@ def startGame():
     done = False
 
 
-    bg = pygame.image.load("resources/background/TacTikBoard.png")
+    bg = pygame.image.load("resources/img/background/TacTikBoard.png")
     gameDisplay = pygame.display.set_mode((window_width, window_height))
     gameDisplay.blit(bg, (0, 0))
 
