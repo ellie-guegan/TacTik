@@ -84,7 +84,7 @@ class TacTik:
         return print("[TacTik] " + self.getCurrentTeamColorPrefix() + str(text)+ " " +str(text2))
 
     def getCurrentTeamColorPrefix(self):
-        return "[" + self.getCurrentPlayer().color + "] "
+        return self.getCurrentPlayer().getColorPrefix()
 
     def setMessage(self, text = ""):
         if (text != "" and config.CurrentPos != -1):
@@ -270,9 +270,13 @@ class TacTik:
         nextIndexInMap = (currentIndexInMap + self.dice) % len(config.MAP)
         
         self.print("[moveToNext] Moving token from " + str(token.coord) + " to " + str(config.MAP[nextIndexInMap]))
+        # check if it's going to eat another token
+        for allTokens in config.TOKENS_BY_COLOR.values():
+            for otherToken in allTokens:
+                if config.areCoordsEqual(otherToken.coord, config.MAP[nextIndexInMap]):
+                    # Ooops! You're a goner!
+                    otherToken.moveToYard()
+
         token.moveTo(config.MAP[nextIndexInMap])
         self.sound.PlayMove()
         return True
-            
-
-    
