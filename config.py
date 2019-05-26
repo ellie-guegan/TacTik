@@ -28,6 +28,9 @@ def _getColorTokenImage(color):
 # Player and token classes
 # ------------------------------------------
 
+def areCoordsEqual(coords, otherCoords):
+    return coords[0] == otherCoords[0] and coords[1] == otherCoords[1]
+
 class Player:
     def __init__(self, color):
         self.color = color
@@ -41,6 +44,9 @@ class Player:
                 
         return allInYard
     
+    def getColorPrefix(self):
+        return "[" + "{:<7}".format(self.color) + "] "
+    
 class Token:
     def __init__(self, player, coord, backHome):
         self.player = player
@@ -50,18 +56,34 @@ class Token:
         
     def isInTheYard(self):
         for coords in START_STORAGE_COORDS[self.player.color]:
-            if (self.coord[0] == coords[0] and self.coord[1] == coords[1]):
+            if areCoordsEqual(self.coord, coords):
                 return True
         
         return False
-    
+
     def moveToFirstPosition(self):
         self.coord[0] = START_POSITION_COORDS[self.player.color][0]
-        self.coord[1] = START_POSITION_COORDS[self.player.color][1]    
-        
+        self.coord[1] = START_POSITION_COORDS[self.player.color][1]
+
     def moveTo(self, coord):
         self.coord[0] = coord[0]
         self.coord[1] = coord[1]
+
+    def moveToYard(self):
+        # find the first free yard spot
+        for yardCoord in START_STORAGE_COORDS[self.player.color]:
+            positionTaken = False
+            for teamToken in TOKENS_BY_COLOR[self.player.color]:
+                if areCoordsEqual(teamToken.coord, yardCoord):
+                     positionTaken = True
+                     break
+
+            if not positionTaken:
+                self.moveTo(yardCoord)
+                return
+            
+        raise ValueError(self.player.getColorPrefix() + "You're asking to move to the yard but there are no free spots in the yard. ")
+        
                 
 # ------------------------------------------
 # Track coordinates calculations
@@ -75,8 +97,8 @@ def rotateTrack(track):
 def rotateCoord(coord):
     x = coord[0] - CENTER_Pos[0]
     y = coord[1] - CENTER_Pos[1]
-    newX = CENTER_Pos[0]-y
-    newY = CENTER_Pos[1]+x
+    newX = CENTER_Pos[0] - y
+    newY = CENTER_Pos[1] + x
     return [newX, newY]
 
 # ------------------------------------------
