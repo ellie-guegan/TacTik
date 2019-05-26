@@ -45,7 +45,7 @@ class Player:
         return allInYard
     
     def getColorPrefix(self):
-        return "[" + self.color + "] "
+        return "[" + "{:<7}".format(self.color) + "] "
     
 class Token:
     def __init__(self, player, coord, backHome):

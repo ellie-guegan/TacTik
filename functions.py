@@ -99,8 +99,8 @@ class TacTik:
     # Player
     # ------------------------------------------------------------------------------------
     def _waitSomeTime(self, nbSecs):
-        current_time = pygame.time.get_ticks()
-        exit_time = current_time + nbSecs * 1000
+        start_time = pygame.time.get_ticks()
+        exit_time = start_time + nbSecs * 1000
         keepWaiting = True
 
         while keepWaiting:
@@ -108,6 +108,8 @@ class TacTik:
                 if event.type == pygame.QUIT:
                     quitGame()
             current_time = pygame.time.get_ticks()
+            if (current_time - start_time % 1000 == 0):
+                self.print("Waiting...")
             if current_time >= exit_time:
                 keepWaiting = False
     
@@ -231,6 +233,7 @@ class TacTik:
         if (token.isInTheYard()):
             if (self.dice == 6 or self.dice == 5):
                 token.moveToFirstPosition()
+                self.eatTokens(token)
                 self.sound.PlayStart()
                 self.setMessage("You got out of the yard!")
                 self.print("[MoveSelectedToken] The pawn came out of the house.")
@@ -266,17 +269,21 @@ class TacTik:
         if (currentIndexInMap == -1):
             self.print("[moveToNext] The selected token " + str(token.coord) + " cannot be moved (didn't find on in the map).")
             raise ValueError("Couldn't find token " + str(token.coord) + " of color " + token.player.color + " on the map.")
-        
+
         nextIndexInMap = (currentIndexInMap + self.dice) % len(config.MAP)
-        
+
         self.print("[moveToNext] Moving token from " + str(token.coord) + " to " + str(config.MAP[nextIndexInMap]))
+        token.moveTo(config.MAP[nextIndexInMap])
+        self.eatTokens(token)
+
+        self.sound.PlayMove()
+        return True
+
+    def eatTokens(self, token):
         # check if it's going to eat another token
         for allTokens in config.TOKENS_BY_COLOR.values():
             for otherToken in allTokens:
-                if config.areCoordsEqual(otherToken.coord, config.MAP[nextIndexInMap]):
+                if otherToken != token and config.areCoordsEqual(otherToken.coord, token.coord):
                     # Ooops! You're a goner!
                     otherToken.moveToYard()
-
-        token.moveTo(config.MAP[nextIndexInMap])
-        self.sound.PlayMove()
-        return True
+                    self.print("Token ate another token of color " + otherToken.player.color)
